@@ -13,41 +13,53 @@ function getSessionTimeline() {
   
   const sessions = [];
   const logFiles = fs.readdirSync(logsDir)
-    .filter(f => f.endsWith('.md') && f.startsWith('session_'))
+    .filter(f => f.endsWith('.md') && f !== '.gitkeep')
     .sort();
-  
-  logFiles.forEach(logFile => {
+
+  logFiles.forEach((logFile, index) => {
     const logPath = path.join(logsDir, logFile);
     const stats = fs.statSync(logPath);
     const content = fs.readFileSync(logPath, 'utf-8');
+
+    // Extract session info - try multiple patterns for session numbers
+    let sessionNumber = logFile.match(/session_(\d+)\.md/)?.[1];
+    if (!sessionNumber) {
+      sessionNumber = logFile.match(/_(\d{8})\.md/)?.[1]; // date pattern like 20250731
+    }
+    if (!sessionNumber) {
+      sessionNumber = index + 1; // fallback to file order
+    }
     
-    // Extract session info
-    const sessionNumber = logFile.match(/session_(\d+)\.md/)?.[1];
     const lines = content.split('\n');
-    const title = lines.find(line => line.startsWith('# '))?.replace('# ', '') || logFile;
-    const task = lines.find(line => line.toLowerCase().includes('task:'))?.replace(/.*task:\s*/i, '') || 'Unknown task';
+    const title = lines.find(line => line.startsWith('# '))?.replace('# ', '') || logFile.replace('.md', '');
+    const task = lines.find(line => line.toLowerCase().includes('task:') || line.toLowerCase().includes('goal:'))?.replace(/.*(?:task|goal):\s*/i, '') || 'Session Analysis';    // Get reflection if it exists - try multiple patterns
+    const baseName = logFile.replace('.md', '');
+    const possibleReflectionFiles = [
+      `${baseName}_reflection.md`,
+      `session_${sessionNumber}_reflection.md`
+    ];
     
-    // Get reflection if it exists
-    const reflectionFile = `session_${sessionNumber}_reflection.md`;
-    const reflectionPath = path.join(reflectionsDir, reflectionFile);
     let reflection = null;
-    
-    if (fs.existsSync(reflectionPath)) {
-      const reflectionContent = fs.readFileSync(reflectionPath, 'utf-8');
-      const reflectionLines = reflectionContent.split('\n');
-      const keyInsights = reflectionLines
-        .filter(line => line.startsWith('- ') || line.startsWith('* '))
-        .slice(0, 3)
-        .map(line => line.replace(/^[-*]\s*/, ''));
-      
-      reflection = {
-        exists: true,
-        keyInsights
-      };
+    for (const reflectionFile of possibleReflectionFiles) {
+      const reflectionPath = path.join(reflectionsDir, reflectionFile);
+      if (fs.existsSync(reflectionPath)) {
+        const reflectionContent = fs.readFileSync(reflectionPath, 'utf-8');
+        const reflectionLines = reflectionContent.split('\n');
+        const keyInsights = reflectionLines
+          .filter(line => line.startsWith('- ') || line.startsWith('* '))
+          .slice(0, 3)
+          .map(line => line.replace(/^[-*]\s*/, ''));
+        
+        reflection = {
+          exists: true,
+          keyInsights
+        };
+        break; // Found reflection, stop looking
+      }
     }
     
     sessions.push({
-      number: parseInt(sessionNumber),
+      number: parseInt(sessionNumber) || index + 1,
       title,
       task,
       date: stats.mtime,
