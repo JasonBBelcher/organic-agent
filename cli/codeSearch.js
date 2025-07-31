@@ -364,7 +364,7 @@ class CodePatternSearcher {
   }
 
   /**
-   * Find contextually meaningful pattern ranges based on Ajax Laravel domain
+   * Find contextually meaningful pattern ranges based on common code patterns
    */
   findPatternRanges(lines, filePath) {
     const patterns = [];
@@ -372,42 +372,42 @@ class CodePatternSearcher {
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i].trim().toLowerCase();
       
-      // PHP patterns - focus on Ajax Laravel enterprise patterns
+      // PHP patterns - focus on common architectural patterns
       if (filePath.endsWith('.php')) {
-        // Polymorphic handler classes
+        // Common class patterns
         if (line.match(/class\s+\w*(handler|controller|repository|factory|service|model)\w*/)) {
           const endLine = this.findBlockEnd(lines, i);
           patterns.push({
-            type: 'enterprise_class',
+            type: 'common_class',
             startLine: i + 1,
             endLine: Math.min(endLine + 1, i + 30),
             description: lines[i].trim()
           });
         }
         
-        // Key Laravel methods
+        // Key framework methods
         if (line.match(/(?:public|private|protected)\s+function\s+(update|get|create|delete|handle|process|validate)/)) {
           const endLine = this.findBlockEnd(lines, i);
           patterns.push({
-            type: 'business_method', 
+            type: 'framework_method', 
             startLine: i + 1,
             endLine: Math.min(endLine + 1, i + 20),
             description: lines[i].trim()
           });
         }
         
-        // Polymorphic relationships
-        if (line.includes('morphto') || line.includes('handler_type') || line.includes('handler_id')) {
+        // Database relationships
+        if (line.includes('belongsto') || line.includes('hasmany') || line.includes('relationship')) {
           patterns.push({
-            type: 'polymorphic_relationship',
+            type: 'database_relationship',
             startLine: i + 1,
             endLine: Math.min(i + 10, lines.length),
             description: lines[i].trim()
           });
         }
         
-        // Event dispatching
-        if (line.includes('dispatch') || line.includes('event')) {
+        // Event dispatching patterns
+        if (line.includes('dispatch') || line.includes('event') || line.includes('emit')) {
           patterns.push({
             type: 'event_pattern',
             startLine: i + 1,
@@ -417,13 +417,13 @@ class CodePatternSearcher {
         }
       }
       
-      // JavaScript patterns - focus on Ajax API patterns
+      // JavaScript patterns - focus on API and async patterns
       if (filePath.endsWith('.js')) {
-        // Ajax API calls
-        if (line.includes('wsajax') || line.includes('ajax') || line.includes('.call(')) {
+        // API calls and async operations
+        if (line.includes('fetch') || line.includes('axios') || line.includes('api') || line.includes('.call(')) {
           const endLine = this.findBlockEnd(lines, i);
           patterns.push({
-            type: 'ajax_api_call',
+            type: 'api_call',
             startLine: i + 1, 
             endLine: Math.min(endLine + 1, i + 15),
             description: lines[i].trim()
@@ -454,13 +454,13 @@ class CodePatternSearcher {
       }
     }
     
-    // Sort by importance (polymorphic patterns first, then business logic)
+    // Sort by importance (database patterns first, then core logic)
     return patterns.sort((a, b) => {
       const importance = {
-        'polymorphic_relationship': 10,
-        'enterprise_class': 9,
-        'ajax_api_call': 8,
-        'business_method': 7,
+        'database_relationship': 10,
+        'common_class': 9,
+        'api_call': 8,
+        'framework_method': 7,
         'event_pattern': 6,
         'validation_function': 5,
         'frontend_controller': 4
