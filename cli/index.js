@@ -99,4 +99,96 @@ program
     }
   });
 
+// Enhanced Information Retrieval Commands
+
+program
+  .command('search')
+  .argument('<term>', 'Search term to find across all learning data')
+  .description('Search across all organic learning data with highlighted results')
+  .action((term) => {
+    const scriptPath = path.join(__dirname, 'search.js');
+    execSync(`node ${scriptPath} "${term}"`, { stdio: 'inherit' });
+  });
+
+program
+  .command('query')
+  .argument('<question>', 'Question to ask about stored knowledge')
+  .description('Ask questions about stored knowledge and get contextual answers')
+  .action((question) => {
+    const scriptPath = path.join(__dirname, 'query.js');
+    execSync(`node ${scriptPath} "${question}"`, { stdio: 'inherit' });
+  });
+
+program
+  .command('timeline')
+  .description('Show chronological learning progression with session summaries')
+  .action(() => {
+    const scriptPath = path.join(__dirname, 'timeline.js');
+    execSync(`node ${scriptPath}`, { stdio: 'inherit' });
+  });
+
+program
+  .command('principles')
+  .option('-f, --filter <filter>', 'Filter principles by keyword')
+  .description('List all learned principles with sources and patterns')
+  .action((options) => {
+    const scriptPath = path.join(__dirname, 'knowledge.js');
+    const filter = options.filter ? `"${options.filter}"` : '';
+    execSync(`node ${scriptPath} principles ${filter}`, { stdio: 'inherit' });
+  });
+
+program
+  .command('contradictions')
+  .description('Show belief contradictions and their resolutions')
+  .action(() => {
+    const scriptPath = path.join(__dirname, 'knowledge.js');
+    execSync(`node ${scriptPath} contradictions`, { stdio: 'inherit' });
+  });
+
+program
+  .command('insights')
+  .option('-d, --domain <domain>', 'Filter insights by technical domain')
+  .description('Browse implementation insights by technical domain')
+  .action((options) => {
+    const scriptPath = path.join(__dirname, 'knowledge.js');
+    const domain = options.domain ? `"${options.domain}"` : '';
+    execSync(`node ${scriptPath} insights ${domain}`, { stdio: 'inherit' });
+  });
+
+program
+  .command('analyze')
+  .argument('<topic>', 'Topic to analyze in depth')
+  .description('Deep analysis of specific topics or patterns across all data')
+  .action((topic) => {
+    const scriptPath = path.join(__dirname, 'analysis.js');
+    execSync(`node ${scriptPath} analyze "${topic}"`, { stdio: 'inherit' });
+  });
+
+program
+  .command('compare')
+  .argument('<session1>', 'First session file (e.g., session_12.md)')
+  .argument('<session2>', 'Second session file (e.g., session_13.md)')
+  .description('Compare knowledge evolution between two sessions')
+  .action((session1, session2) => {
+    const scriptPath = path.join(__dirname, 'analysis.js');
+    execSync(`node ${scriptPath} compare "${session1}" "${session2}"`, { stdio: 'inherit' });
+  });
+
+program
+  .command('export')
+  .option('-f, --format <format>', 'Export format (json|markdown)', 'json')
+  .description('Export knowledge in different formats for external use')
+  .action((options) => {
+    const scriptPath = path.join(__dirname, 'analysis.js');
+    execSync(`node ${scriptPath} export ${options.format}`, { stdio: 'inherit' });
+  });
+
+program
+  .command('knowledge-base')
+  .description('Export solidified knowledge to a named knowledge base file')
+  .action(() => {
+    const scriptPath = path.join(__dirname, 'export-knowledge.js');
+    execSync(`node ${scriptPath}`, { stdio: 'inherit' });
+  });
+
 program.parse();

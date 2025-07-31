@@ -1,0 +1,160 @@
+# Organic Learning Agent - Security and Artifacts Exclusion
+
+# Learning Artifacts - Exclude from version control
+data/logs/
+data/reflections/
+data/diffs/
+data/summaries/
+data/commits/
+data/memory/organic_learning_tree_backup_*.md
+
+# Temporary and Session Files
+session_*.md
+temp_*.md
+*.tmp
+*.temp
+
+# Security and Sensitive Information
+*.env
+.env.*
+!.env.example
+secrets/
+keys/
+credentials/
+config/secrets.json
+config/production.json
+
+# API Keys and Tokens
+**/api-keys/
+**/tokens/
+**/*-secret*
+**/*-private*
+**/*-key*
+**/*-token*
+**/*-credential*
+
+# Personal Information Patterns
+**/personal/
+**/private/
+**/confidential/
+email-*.json
+phone-*.json
+address-*.json
+
+# System and Platform Specific
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn-integrity
+
+# IDE and Editor Files
+.vscode/settings.json
+.vscode/launch.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS Generated Files
+.directory
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage and Testing
+coverage/
+.nyc_output
+.coverage
+*.lcov
+
+# Build Artifacts
+dist/
+build/
+out/
+.next/
+.nuxt/
+
+# Database Files
+*.db
+*.sqlite
+*.sqlite3
+
+# Log Files
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime Data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Security Scanning Results
+security-scan-*.json
+vulnerability-report-*.json
+
+# Backup Files
+*.backup
+*.bak
+*.old
+backup-*
+
+# Sensitive Configuration Patterns
+*production.config.*
+*staging.config.*
+*local.config.*
+*secret.config.*
+
+# Email and Communication Logs
+email-logs/
+communication-*.json
+message-*.json
+
+# Financial and Payment Information
+payment-*.json
+billing-*.json
+financial-*.json
+
+# Authentication and Session Data
+auth-*.json
+session-*.json
+jwt-*.json
+oauth-*.json
+
+# Network and Infrastructure
+network-config/
+infrastructure-*.json
+server-*.json
+deployment-secrets/
+
+# Third-party Service Configurations
+aws-*.json
+gcp-*.json
+azure-*.json
+github-*.json
+slack-*.json
+
+# Custom Exclusions for Learning Safety
+# Exclude any files that might contain:
+# - User passwords or personal data
+# - Internal system configurations
+# - Business logic that should remain private
+# - Customer data or PII
+# - Financial information
+# - Legal documents
+# - Medical information
+# - Biometric data
