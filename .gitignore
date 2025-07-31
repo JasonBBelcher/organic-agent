@@ -1,12 +1,10 @@
 # Organic Learning Agent - Security and Artifacts Exclusion
 
 # Learning Artifacts - Exclude from version control
-data/logs/
-data/reflections/
-data/diffs/
-data/summaries/
-data/commits/
-data/memory/organic_learning_tree_backup_*.md
+data/
+
+# Knowledge Base Exports - Exclude from version control
+exports/
 
 # Temporary and Session Files
 session_*.md
