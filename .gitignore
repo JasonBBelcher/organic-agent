@@ -3,6 +3,10 @@
 # Learning Artifacts - Exclude from version control
 data/
 
+# Allow example files for documentation
+!data/docs/example*.json
+!data/config/workspace_paths.json
+
 # Knowledge Base Exports - Exclude from version control
 exports/
 

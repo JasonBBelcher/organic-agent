@@ -191,4 +191,34 @@ program
     execSync(`node ${scriptPath}`, { stdio: 'inherit' });
   });
 
+program
+  .command('code-search')
+  .argument('[terms...]', 'Keywords to search for in code patterns')
+  .description('Search for concrete code pattern examples by keywords')
+  .action((terms) => {
+    const scriptPath = path.join(__dirname, 'codeSearch.js');
+    if (!terms || terms.length === 0) {
+      execSync(`node ${scriptPath}`, { stdio: 'inherit' });
+    } else {
+      const searchTerms = terms.join(' ');
+      execSync(`node ${scriptPath} "${searchTerms}"`, { stdio: 'inherit' });
+    }
+  });
+
+program
+  .command('build-code-index')
+  .description('Build/rebuild the keyword-based code pattern index')
+  .action(() => {
+    const scriptPath = path.join(__dirname, 'codeSearch.js');
+    execSync(`node ${scriptPath} build-index`, { stdio: 'inherit' });
+  });
+
+program
+  .command('code-stats')
+  .description('Show code pattern index statistics and top keywords')
+  .action(() => {
+    const scriptPath = path.join(__dirname, 'codeSearch.js');
+    execSync(`node ${scriptPath} stats`, { stdio: 'inherit' });
+  });
+
 program.parse();
