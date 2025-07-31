@@ -1,0 +1,18 @@
+{
+  "name": "organic-agent",
+  "version": "1.0.0",
+  "description": "A file-based, Claude-compatible agent framework for simulating organic learning through task reflection, memory tree updates, and versioned self-revision. Includes CLI tools for generating insights, detecting contradictions, and diffing cognitive state over time.",
+  "main": "cli/index.js",
+  "scripts": {
+    "reflect": "node cli/index.js reflect",
+    "diff": "node cli/index.js diff"
+  },
+  "keywords": ["AI", "Claude", "memory", "reflection", "agent", "learning", "cli"],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^14.0.0",
+    "diff": "^8.0.2"
+  }
+}
+
