@@ -1,7 +1,8 @@
 # Organic Learning Agent - Security and Artifacts Exclusion
 
-# Learning Artifacts - Exclude from version control
-data/
+# Learning Artifacts - Exclude from version control (but keep directory structure)
+data/**/*
+!data/**/.gitkeep
 
 # Knowledge Base Exports - Exclude from version control
 exports/
