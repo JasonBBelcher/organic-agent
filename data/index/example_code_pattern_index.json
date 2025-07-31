@@ -1,0 +1,167 @@
+{
+  "metadata": {
+    "generated_at": "2025-07-31T19:00:00Z",
+    "workspace_name": "example-legacy-system",
+    "total_patterns": 12,
+    "frameworks_detected": ["Custom MVC", "Legacy JavaScript", "SQL Procedures"],
+    "architecture_type": "Monolithic Legacy System"
+  },
+  "patterns": {
+    "authentication_system": {
+      "description": "Legacy authentication and session management patterns",
+      "files": [
+        {
+          "path": "src/auth/UserAuth.php",
+          "line": 45,
+          "snippet": "class UserAuth {\n    public function authenticate($username, $password) {\n        // Legacy authentication logic\n        $hashedPassword = md5($password . SALT);\n        return $this->validateCredentials($username, $hashedPassword);\n    }\n}"
+        },
+        {
+          "path": "includes/session.inc.php",
+          "line": 12,
+          "snippet": "function start_secure_session() {\n    session_start();\n    $_SESSION['user_id'] = $validated_user_id;\n    $_SESSION['last_activity'] = time();\n}"
+        }
+      ],
+      "keywords": ["authentication", "session", "login", "security", "user_auth"]
+    },
+    "database_connection": {
+      "description": "Legacy database connection and query patterns",
+      "files": [
+        {
+          "path": "lib/Database.class.php",
+          "line": 23,
+          "snippet": "class Database {\n    private $connection;\n    \n    public function connect() {\n        $this->connection = mysql_connect(DB_HOST, DB_USER, DB_PASS);\n        mysql_select_db(DB_NAME, $this->connection);\n    }\n}"
+        },
+        {
+          "path": "includes/db_functions.php",
+          "line": 78,
+          "snippet": "function execute_query($sql, $params = array()) {\n    global $db_connection;\n    // Legacy query execution with basic sanitization\n    $escaped_sql = mysql_real_escape_string($sql);\n    return mysql_query($escaped_sql, $db_connection);\n}"
+        }
+      ],
+      "keywords": ["database", "mysql", "connection", "query", "sql"]
+    },
+    "legacy_routing": {
+      "description": "Custom routing system for legacy applications",
+      "files": [
+        {
+          "path": "core/Router.php",
+          "line": 15,
+          "snippet": "class Router {\n    private $routes = array();\n    \n    public function addRoute($pattern, $controller, $action) {\n        $this->routes[$pattern] = array(\n            'controller' => $controller,\n            'action' => $action\n        );\n    }\n}"
+        }
+      ],
+      "keywords": ["routing", "controller", "url_mapping", "mvc"]
+    },
+    "data_validation": {
+      "description": "Legacy input validation and sanitization patterns",
+      "files": [
+        {
+          "path": "lib/Validator.php",
+          "line": 34,
+          "snippet": "function validate_input($data, $rules) {\n    $errors = array();\n    foreach ($rules as $field => $rule) {\n        if (!isset($data[$field]) && $rule['required']) {\n            $errors[$field] = 'Field is required';\n        }\n    }\n    return $errors;\n}"
+        }
+      ],
+      "keywords": ["validation", "input_sanitization", "security", "form_processing"]
+    },
+    "template_system": {
+      "description": "Custom template engine for view rendering",
+      "files": [
+        {
+          "path": "template/TemplateEngine.php",
+          "line": 67,
+          "snippet": "class TemplateEngine {\n    public function render($template_file, $variables = array()) {\n        extract($variables);\n        ob_start();\n        include($this->template_path . $template_file);\n        return ob_get_clean();\n    }\n}"
+        }
+      ],
+      "keywords": ["template", "view", "rendering", "html_generation"]
+    },
+    "error_handling": {
+      "description": "Legacy error handling and logging mechanisms",
+      "files": [
+        {
+          "path": "core/ErrorHandler.php",
+          "line": 19,
+          "snippet": "function handle_error($errno, $errstr, $errfile, $errline) {\n    $error_message = \"Error: [$errno] $errstr in $errfile on line $errline\";\n    error_log($error_message, 3, LOG_FILE);\n    \n    if (DEBUG_MODE) {\n        echo $error_message;\n    }\n}"
+        }
+      ],
+      "keywords": ["error_handling", "logging", "debugging", "exception"]
+    },
+    "ajax_endpoints": {
+      "description": "Legacy AJAX request handling patterns",
+      "files": [
+        {
+          "path": "ajax/handlers.php",
+          "line": 12,
+          "snippet": "if ($_POST['action'] == 'get_user_data') {\n    $user_id = intval($_POST['user_id']);\n    $user_data = get_user_by_id($user_id);\n    \n    header('Content-Type: application/json');\n    echo json_encode($user_data);\n    exit;\n}"
+        }
+      ],
+      "keywords": ["ajax", "json", "api_endpoint", "async_request"]
+    },
+    "configuration_management": {
+      "description": "Legacy configuration and settings management",
+      "files": [
+        {
+          "path": "config/settings.php",
+          "line": 5,
+          "snippet": "define('DB_HOST', 'localhost');\ndefine('DB_USER', 'app_user');\ndefine('DB_PASS', 'secret_password');\ndefine('APP_VERSION', '2.1.3');\ndefine('DEBUG_MODE', false);"
+        }
+      ],
+      "keywords": ["configuration", "settings", "constants", "environment"]
+    },
+    "file_upload": {
+      "description": "Legacy file upload and processing patterns",
+      "files": [
+        {
+          "path": "lib/FileUpload.php",
+          "line": 28,
+          "snippet": "function process_upload($file_input_name) {\n    $allowed_types = array('jpg', 'png', 'gif', 'pdf');\n    $file_extension = pathinfo($_FILES[$file_input_name]['name'], PATHINFO_EXTENSION);\n    \n    if (in_array(strtolower($file_extension), $allowed_types)) {\n        $upload_path = UPLOAD_DIR . '/' . time() . '_' . $_FILES[$file_input_name]['name'];\n        move_uploaded_file($_FILES[$file_input_name]['tmp_name'], $upload_path);\n        return $upload_path;\n    }\n    return false;\n}"
+        }
+      ],
+      "keywords": ["file_upload", "file_processing", "media_handling"]
+    },
+    "legacy_javascript": {
+      "description": "Legacy JavaScript patterns and DOM manipulation",
+      "files": [
+        {
+          "path": "js/legacy-app.js",
+          "line": 156,
+          "snippet": "function updateUserProfile(userId) {\n    var xhr = new XMLHttpRequest();\n    xhr.open('POST', 'ajax/handlers.php', true);\n    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');\n    \n    xhr.onreadystatechange = function() {\n        if (xhr.readyState === 4 && xhr.status === 200) {\n            document.getElementById('user-info').innerHTML = xhr.responseText;\n        }\n    };\n    \n    xhr.send('action=get_user_data&user_id=' + userId);\n}"
+        }
+      ],
+      "keywords": ["javascript", "xhr", "dom_manipulation", "legacy_js"]
+    },
+    "reporting_system": {
+      "description": "Legacy reporting and data export functionality",
+      "files": [
+        {
+          "path": "reports/ReportGenerator.php",
+          "line": 43,
+          "snippet": "class ReportGenerator {\n    public function generateCSV($data, $headers) {\n        $filename = 'report_' . date('Y-m-d_H-i-s') . '.csv';\n        $filepath = REPORTS_DIR . '/' . $filename;\n        \n        $file = fopen($filepath, 'w');\n        fputcsv($file, $headers);\n        \n        foreach ($data as $row) {\n            fputcsv($file, $row);\n        }\n        \n        fclose($file);\n        return $filepath;\n    }\n}"
+        }
+      ],
+      "keywords": ["reporting", "csv_export", "data_export", "file_generation"]
+    },
+    "caching_mechanism": {
+      "description": "Legacy caching implementation patterns",
+      "files": [
+        {
+          "path": "lib/Cache.php",
+          "line": 15,
+          "snippet": "class Cache {\n    private $cache_dir;\n    \n    public function get($key) {\n        $cache_file = $this->cache_dir . '/' . md5($key) . '.cache';\n        \n        if (file_exists($cache_file) && (time() - filemtime($cache_file)) < CACHE_LIFETIME) {\n            return unserialize(file_get_contents($cache_file));\n        }\n        \n        return false;\n    }\n    \n    public function set($key, $data) {\n        $cache_file = $this->cache_dir . '/' . md5($key) . '.cache';\n        file_put_contents($cache_file, serialize($data));\n    }\n}"
+        }
+      ],
+      "keywords": ["caching", "performance", "file_cache", "serialization"]
+    }
+  },
+  "search_keywords": [
+    "authentication", "session", "login", "security", "user_auth",
+    "database", "mysql", "connection", "query", "sql",
+    "routing", "controller", "url_mapping", "mvc",
+    "validation", "input_sanitization", "form_processing",
+    "template", "view", "rendering", "html_generation",
+    "error_handling", "logging", "debugging", "exception",
+    "ajax", "json", "api_endpoint", "async_request",
+    "configuration", "settings", "constants", "environment",
+    "file_upload", "file_processing", "media_handling",
+    "javascript", "xhr", "dom_manipulation", "legacy_js",
+    "reporting", "csv_export", "data_export", "file_generation",
+    "caching", "performance", "file_cache", "serialization"
+  ]
+}
