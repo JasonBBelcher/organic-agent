@@ -192,6 +192,14 @@ program
   });
 
 program
+  .command('searchable-knowledge-base')
+  .description('Export enhanced knowledge base with unified search index')
+  .action(() => {
+    const scriptPath = path.join(__dirname, 'enhanced-export-knowledge.js');
+    execSync(`node ${scriptPath}`, { stdio: 'inherit' });
+  });
+
+program
   .command('code-search')
   .argument('[terms...]', 'Keywords to search for in code patterns')
   .description('Search for concrete code pattern examples by keywords')

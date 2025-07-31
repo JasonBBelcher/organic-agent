@@ -19,6 +19,7 @@ const readline = require('readline');
 class CodePatternSearcher {
   constructor(config = {}) {
     this.indexPath = config.indexPath || 'data/index/code_pattern_index.json';
+    this.indexDir = path.dirname(this.indexPath);
     this.workspacePaths = config.workspacePaths || this.loadWorkspaceConfig();
     this.domainTerms = config.domainTerms || this.getDefaultDomainTerms();
     this.index = this.loadIndex();
@@ -94,9 +95,17 @@ class CodePatternSearcher {
   }
 
   loadIndex() {
+    // Try to load unified index first, fall back to code-only index
+    const unifiedIndexPath = path.join(this.indexDir, 'unified_search_index.json');
+    const codeIndexPath = this.indexPath;
+    
     try {
-      if (fs.existsSync(this.indexPath)) {
-        return JSON.parse(fs.readFileSync(this.indexPath, 'utf-8'));
+      if (fs.existsSync(unifiedIndexPath)) {
+        console.log('🔗 Using unified search index (code + knowledge)');
+        return JSON.parse(fs.readFileSync(unifiedIndexPath, 'utf-8'));
+      } else if (fs.existsSync(codeIndexPath)) {
+        console.log('📋 Using code pattern index only');
+        return JSON.parse(fs.readFileSync(codeIndexPath, 'utf-8'));
       }
     } catch (error) {
       console.log('📝 No existing index found, will create new one');
@@ -547,9 +556,28 @@ class CodePatternSearcher {
     
     // Display results
     sortedResults.slice(0, 15).forEach((result, index) => {
-      console.log(`${index + 1}. 📁 ${result.workspace}/${result.relativePath}`);
+      const relativePath = result.relativePath || result.path;
+      const workspace = result.workspace || 'unknown';
+      const displayPath = relativePath.startsWith('data/') ? relativePath : `${workspace}/${relativePath}`;
+      
+      console.log(`${index + 1}. 📁 ${displayPath}`);
+      
+      // Show heading for knowledge entries
+      if (result.heading) {
+        console.log(`   📖 "${result.heading}"`);
+      }
+      
+      // Show type badge for knowledge entries
+      if (result.type) {
+        const typeEmoji = result.type === 'memory' ? '🧠' : result.type === 'reflection' ? '🔍' : '📈';
+        console.log(`   ${typeEmoji} Type: ${result.type}`);
+      }
+      
       console.log(`   🔗 ${result.path}`);
-      console.log(`   📊 Score: ${result.totalScore.toFixed(1)} | Keywords: ${result.matchedKeywords.map(k => k.keyword).join(', ')}`);
+      
+      // Deduplicate keywords for display
+      const uniqueKeywords = [...new Set(result.matchedKeywords.map(k => k.keyword))];
+      console.log(`   📊 Score: ${result.totalScore.toFixed(1)} | Keywords: ${uniqueKeywords.slice(0, 5).join(', ')}${uniqueKeywords.length > 5 ? '...' : ''}`);
       
       if (result.patterns && result.patterns.length > 0) {
         console.log(`   🎯 Patterns found:`);
