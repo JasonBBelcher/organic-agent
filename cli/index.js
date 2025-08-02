@@ -16,6 +16,29 @@ function checkFileExists(filePath, description) {
   }
 }
 
+// Session Management Commands (Deterministic Workflows)
+
+program
+  .command('session')
+  .argument('<action>', 'Action: start, integrate, list, current')
+  .argument('[topic]', 'Topic for start action or session file for integrate')
+  .description('Manage learning sessions with deterministic workflows')
+  .action((action, topic) => {
+    const scriptPath = path.join(__dirname, 'sessionManager.js');
+    const args = topic ? `${action} "${topic}"` : action;
+    execSync(`node ${scriptPath} ${args}`, { stdio: 'inherit' });
+  });
+
+program
+  .command('integrate')
+  .argument('[sessionFile]', 'Session file to integrate (defaults to most recent)')
+  .description('Integrate session learnings into memory tree')
+  .action((sessionFile) => {
+    const scriptPath = path.join(__dirname, 'sessionManager.js');
+    const args = sessionFile ? `integrate "${sessionFile}"` : 'integrate';
+    execSync(`node ${scriptPath} ${args}`, { stdio: 'inherit' });
+  });
+
 program
   .command('reflect')
   .argument('<logFile>', 'Path to session log file (e.g. data/logs/session_12.md)')
@@ -99,24 +122,40 @@ program
     }
   });
 
-// Enhanced Information Retrieval Commands
+// Enhanced Information Retrieval Commands (Unified Interface)
 
 program
   .command('search')
-  .argument('<term>', 'Search term to find across all learning data')
-  .description('Search across all organic learning data with highlighted results')
-  .action((term) => {
-    const scriptPath = path.join(__dirname, 'search.js');
-    execSync(`node ${scriptPath} "${term}"`, { stdio: 'inherit' });
+  .argument('<keywords>', 'Keywords to search across all sources (code + memory + logs)')
+  .option('-l, --limit <number>', 'Maximum number of results', '20')
+  .option('-c, --confidence <number>', 'Minimum confidence threshold (0.0-1.0)', '0.1')
+  .option('-s, --source <source>', 'Filter by source: code, memory, logs, all', 'all')
+  .description('Unified search across all learning data with confidence scoring')
+  .action((keywords, options) => {
+    const scriptPath = path.join(__dirname, 'unifiedSearch.js');
+    const args = [keywords];
+    if (options.limit) args.push('--limit', options.limit);
+    if (options.confidence) args.push('--confidence', options.confidence);
+    if (options.source) args.push('--source', options.source);
+    execSync(`node ${scriptPath} ${args.join(' ')}`, { stdio: 'inherit' });
   });
 
 program
-  .command('query')
-  .argument('<question>', 'Question to ask about stored knowledge')
-  .description('Ask questions about stored knowledge and get contextual answers')
-  .action((question) => {
-    const scriptPath = path.join(__dirname, 'query.js');
-    execSync(`node ${scriptPath} "${question}"`, { stdio: 'inherit' });
+  .command('find')
+  .argument('<pattern>', 'Find specific implementation patterns in code')
+  .description('Find concrete code examples of specific patterns')
+  .action((pattern) => {
+    const scriptPath = path.join(__dirname, 'unifiedSearch.js');
+    execSync(`node ${scriptPath} "${pattern}" --source code --confidence 0.3`, { stdio: 'inherit' });
+  });
+
+program
+  .command('examples')
+  .argument('<concept>', 'Find code examples of a concept from memory principles')
+  .description('Find code implementations related to learned principles')
+  .action((concept) => {
+    const scriptPath = path.join(__dirname, 'unifiedSearch.js');
+    execSync(`node ${scriptPath} "${concept}" --confidence 0.2`, { stdio: 'inherit' });
   });
 
 program
@@ -197,20 +236,6 @@ program
   .action(() => {
     const scriptPath = path.join(__dirname, 'enhanced-export-knowledge.js');
     execSync(`node ${scriptPath}`, { stdio: 'inherit' });
-  });
-
-program
-  .command('code-search')
-  .argument('[terms...]', 'Keywords to search for in code patterns')
-  .description('Search for concrete code pattern examples by keywords')
-  .action((terms) => {
-    const scriptPath = path.join(__dirname, 'codeSearch.js');
-    if (!terms || terms.length === 0) {
-      execSync(`node ${scriptPath}`, { stdio: 'inherit' });
-    } else {
-      const searchTerms = terms.join(' ');
-      execSync(`node ${scriptPath} "${searchTerms}"`, { stdio: 'inherit' });
-    }
   });
 
 program

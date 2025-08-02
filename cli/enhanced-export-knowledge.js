@@ -2,17 +2,14 @@
 
 const fs = require('fs');
 const path = require('path');
-const readline = require('readline');
+// Removed readline - no user input needed for AI tools
 
 class SearchableKnowledgeExporter {
   constructor() {
     this.dataDir = 'data';
     this.exportDir = 'exports';
     this.indexDir = path.join(this.dataDir, 'index');
-    this.rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout
-    });
+    // Removed readline interface - no user input needed
     
     // Domain terms for knowledge content (aligned with code search)
     this.knowledgeDomainTerms = {
@@ -66,13 +63,7 @@ class SearchableKnowledgeExporter {
     };
   }
 
-  async promptForKnowledgeBaseName() {
-    return new Promise((resolve) => {
-      this.rl.question('📚 Enter name for the knowledge base (without extension): ', (name) => {
-        resolve(name.trim() || 'organic-knowledge-base');
-      });
-    });
-  }
+  // Removed promptForKnowledgeBaseName method - using fixed filename
 
   loadMemoryTree() {
     const treePath = path.join(this.dataDir, 'memory', 'organic_learning_tree.md');
@@ -588,7 +579,7 @@ This knowledge base has been processed to:
     return knowledgeBase;
   }
 
-  async exportSearchableKnowledgeBase() {
+  exportSearchableKnowledgeBase() {
     try {
       console.log('🧠 Enhanced Searchable Knowledge Base Exporter\n');
 
@@ -600,8 +591,8 @@ This knowledge base has been processed to:
         fs.mkdirSync(this.indexDir, { recursive: true });
       }
 
-      // Get knowledge base name from user
-      const name = await this.promptForKnowledgeBaseName();
+      // Use fixed filename for AI tool usage
+      const name = 'searchable-knowledge-base';
       const fileName = `${name}.md`;
       const filePath = path.join(this.exportDir, fileName);
 
@@ -640,9 +631,8 @@ This knowledge base has been processed to:
 
     } catch (error) {
       console.error('❌ Error exporting searchable knowledge base:', error.message);
-    } finally {
-      this.rl.close();
     }
+    // Removed finally block - no readline to close
   }
 }
 

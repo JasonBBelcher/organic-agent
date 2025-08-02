@@ -2,25 +2,16 @@
 
 const fs = require('fs');
 const path = require('path');
-const readline = require('readline');
+// Removed readline - no user input needed for AI tools
 
 class KnowledgeBaseExporter {
   constructor() {
     this.dataDir = 'data';
     this.exportDir = 'exports';
-    this.rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout
-    });
+    // Removed readline interface - no user input needed
   }
 
-  async promptForKnowledgeBaseName() {
-    return new Promise((resolve) => {
-      this.rl.question('📚 Enter name for the knowledge base (without extension): ', (name) => {
-        resolve(name.trim() || 'organic-knowledge-base');
-      });
-    });
-  }
+  // Removed promptForKnowledgeBaseName method - using fixed filename
 
   loadMemoryTree() {
     const treePath = path.join(this.dataDir, 'memory', 'organic_learning_tree.md');
@@ -268,7 +259,7 @@ This knowledge base has been processed to:
     return knowledgeBase;
   }
 
-  async exportKnowledgeBase() {
+  exportKnowledgeBase() {
     try {
       console.log('🧠 Organic Learning Knowledge Base Exporter\n');
 
@@ -277,8 +268,8 @@ This knowledge base has been processed to:
         fs.mkdirSync(this.exportDir, { recursive: true });
       }
 
-      // Get knowledge base name from user
-      const name = await this.promptForKnowledgeBaseName();
+      // Use fixed filename for AI tool usage
+      const name = 'organic-knowledge-base';
       const fileName = `${name}.md`;
       const filePath = path.join(this.exportDir, fileName);
 
@@ -304,9 +295,8 @@ This knowledge base has been processed to:
 
     } catch (error) {
       console.error('❌ Error exporting knowledge base:', error.message);
-    } finally {
-      this.rl.close();
     }
+    // Removed finally block - no readline to close
   }
 }
 

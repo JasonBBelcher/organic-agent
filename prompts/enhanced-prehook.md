@@ -136,142 +136,149 @@ For every task, you MUST:
 
 ## Enhanced Tool Awareness
 
-### Core Learning Tools
+### Core Learning Tools (Simplified & Enhanced)
 You can request a human or automation script to:
-- `reflect <session>` - Analyze session log → produces structured reflection
-- `diff <old> <new>` - Compare memory tree versions → shows evolution
-- `summarize <diff>` - Articulate how beliefs evolved from diff analysis
-- `commit <message>` - Save learning state as versioned commit
+- `session start <topic>` - Begin structured session with template
+- `session list` - View recent learning sessions with metadata
+- `integrate [session]` - AI-guided analysis of session → updates memory tree
+- `commit <message>` - Save learning state as versioned snapshot
 - `status` - View current learning system health and recent activity
 
-### Information Retrieval Tools
-You now have powerful retrieval capabilities:
-- `search <term>` - Full-text search across all learning data with context highlighting
-- `query <question>` - Ask questions about stored knowledge with intelligent responses
-- `timeline` - View chronological learning progression with session summaries
+### Unified Search & Discovery Tools (Revolutionary)
+You now have powerful unified search capabilities:
+- `search <keywords>` - **PRIMARY**: Cross-source search with confidence scoring
+- `find <pattern>` - Code-focused pattern discovery with high confidence
+- `examples <concept>` - Find code examples guided by learned principles  
+- `principles [filter]` - List validated principles with sources and evidence
 
-### Knowledge Navigation Tools
-Navigate your knowledge systematically:
-- `principles [--filter <term>]` - List learned principles with sources and patterns
-- `contradictions` - Show belief contradictions and their resolutions
-- `insights [--domain <area>]` - Browse implementation insights by technical domain
+### Knowledge Export Tools (AI-Optimized)
+Export knowledge without user interaction:
+- `knowledge-base` - Export structured knowledge → fixed filename
+- `searchable-knowledge-base` - Enhanced export with search index integration
 
-### Advanced Analysis Tools
+### Advanced Analysis Tools (Enhanced)
 Perform deep knowledge analysis:
-- `analyze <topic>` - Deep analysis of specific topics across all stored data
-- `compare <session1> <session2>` - Compare knowledge evolution between sessions
-- `export [--format json|markdown]` - Export knowledge for external use
-- `knowledge-base` - Export solidified knowledge to a named, sanitized knowledge base file
+- `analyze <topic>` - Deep analysis of specific topics across all data
+- `timeline` - View chronological learning progression
+- `query <question>` - Ask structured questions about stored knowledge
 
 ### 🔍 NEW: Unified Search & Code Pattern Discovery
 
 **Revolutionary unified search system** that finds both code implementations AND knowledge content:
 
 #### **Primary Search Command**
-- `code-search <keywords>` - **UNIFIED SEARCH** across both:
+- `search <keywords>` - **UNIFIED SEARCH** across all sources:
   - **Code patterns** with exact file paths and line numbers
-  - **Knowledge content** from memory, reflections, and summaries with headings
+  - **Memory tree principles** with evidence and applications
+  - **Session logs** with technical implementation details
+  - **Cross-source confidence scoring** (0.0-1.0)
 
-#### **Code Pattern Management**
-- `build-code-index` - Build/rebuild the code pattern index for current workspace
-- `code-stats` - Show index statistics and top keywords
+#### **Specialized Search Commands**
+- `find <pattern>` - Code-focused pattern discovery with high confidence threshold
+- `examples <concept>` - Find code examples guided by learned principles
+- `principles [filter]` - List validated principles with sources and evidence
 
-#### **Enhanced Knowledge Export**
-- `searchable-knowledge-base` - Export enhanced knowledge base with unified search index integration
+#### **Enhanced Knowledge Management**
+- `session start <topic>` - Begin structured session logging with templates
+- `session list` - View recent learning sessions with metadata
+- `integrate` - AI-guided session analysis and memory tree updates
+- `status` - Complete system health and learning progression overview
+
+#### **Knowledge Export (No User Input Required)**
+- `knowledge-base` - Export structured knowledge → `exports/organic-knowledge-base.md`
+- `searchable-knowledge-base` - Enhanced export with search index
 
 ### 🎯 Unified Search Keywords for AI Agents
 
 **Use these domain-specific keywords to find both code examples AND architectural knowledge:**
 
 #### **Architecture & Design Patterns**
-- `system_architecture` - Find architectural patterns and design principles
-- `microservice_architecture` - Microservice patterns and principles
-- `api_design` - API patterns and design insights
-- `application_architecture` - Application-specific architectural patterns
+- `system architecture` - Find architectural patterns and design principles
+- `api design` - API patterns and design insights
+- `application architecture` - Application-specific architectural patterns
+- `design principle` - Design decisions and architectural rationale
 
 #### **Development Patterns**
-- `mvc_controller` - MVC controller implementations and patterns
-- `data_repository` - Repository pattern implementations and principles
-- `business_service` - Service layer patterns and business logic
-- `object_factory` - Factory pattern implementations and insights
-
-#### **Integration Patterns**
-- `api_middleware` - Middleware implementations and authentication patterns
-- `database_migration` - Data migration patterns and strategies
-- `configuration_management` - Config-driven architecture patterns
-- `deployment_pipeline` - Deployment strategies and CI/CD patterns
+- `mvc controller` - Controller implementations and patterns
+- `repository pattern` - Data access patterns and principles
+- `service layer` - Business logic patterns and service design
+- `middleware authentication` - Authentication patterns and implementations
 
 #### **Performance & Security**
-- `performance_optimization` - Performance patterns and optimization strategies
-- `caching_strategy` - Caching implementations and strategies
-- `security_practice` - Security patterns and best practices
-- `input_validation` - Validation patterns and security controls
+- `performance optimization` - Performance patterns and strategies
+- `security practice` - Security patterns and best practices
+- `input validation` - Validation patterns and security controls
+- `caching strategy` - Caching implementations and strategies
 
 #### **Learning & Process**
-- `learning_insight` - Learning reflections and knowledge evolution
-- `design_principle` - Design principles and architectural decisions
-- `knowledge_evolution` - How knowledge and understanding evolved over time
+- `learning insight` - Accumulated learning reflections and evolution
+- `knowledge evolution` - How understanding evolved over time
+- `technical pattern` - Discovered implementation patterns
 
 ## 🚀 Enhanced Tool Usage Patterns
 
-### **For Application Codebase Discovery** (NEW):
+### **For Development Work Discovery**:
 ```bash
-# Phase 1: Rapid architectural understanding
-code-search "system architecture"        # Find architectural decisions + patterns
-code-search "application architecture"   # Locate application-specific patterns
-code-search "api design"                 # Discover API boundaries + design principles
+# Phase 1: Check existing knowledge and patterns
+search "authentication middleware"      # Find auth patterns + implementations + principles
+search "responsive positioning"         # Locate UI patterns + design insights
+search "performance optimization"       # Get performance insights + implementations
 
-# Phase 2: Implementation pattern discovery
-code-search "mvc controller"             # Find controller implementations + patterns
-code-search "repository pattern"         # Locate data access patterns + principles
-code-search "business service"           # Discover service layer + business logic
+# Phase 2: Pattern-specific discovery  
+find "controller validation"            # Find specific code patterns with high confidence
+examples "responsive design"            # Get code examples from learned principles
+principles "frontend"                   # Review validated frontend principles
 
-# Phase 3: Integration understanding
-code-search "middleware authentication"  # Find auth implementations + strategies
-code-search "database migration"         # Locate data patterns + migration strategies
-code-search "configuration management"   # Find config patterns + environment handling
+# Phase 3: Session management
+session start "implementing user auth"  # Begin structured work documentation
+session list                           # Review recent learning sessions
+integrate                              # Process session learnings into memory tree
+```
+
+### **For Application Codebase Discovery**:
+```bash
+# Rapid architectural understanding
+search "system architecture"           # Find architectural decisions + patterns + knowledge
+search "api design"                    # Discover API boundaries + design principles
+search "application architecture"      # Locate application-specific patterns
+
+# Implementation pattern discovery
+search "mvc controller"               # Find controller implementations + patterns
+search "repository pattern"           # Locate data access patterns + principles  
+search "service layer"                # Discover business logic + service patterns
+
+# Integration understanding
+search "middleware authentication"     # Find auth implementations + strategies
+search "configuration management"      # Find config patterns + environment handling
 ```
 
 ### **For Learning and Knowledge Building**:
 ```bash
-# Discover architectural insights
-code-search "learning insight architecture"  # Find architectural learning evolution
-code-search "design principle"              # Locate design principles and rationale
-code-search "knowledge evolution"           # See how understanding evolved over time
+# Discover accumulated insights
+search "learning insight"             # Find learning evolution and reflections
+search "design principle"             # Locate design principles and rationale
+search "knowledge evolution"          # See how understanding evolved over time
 
-# Find specific domain knowledge
-code-search "performance optimization"      # Get performance insights + implementations
-code-search "security practice"            # Find security patterns + best practices
+# Export and share knowledge
+knowledge-base                        # Export structured knowledge base
+searchable-knowledge-base            # Export enhanced version with search capabilities
 ```
 
-### **Traditional Learning Workflow** (Enhanced):
-1. **Complete task** → Use unified search to find relevant patterns
-2. `reflect <session_file>` - Process new experiences with pattern context
-3. **Update memory tree** with new insights and pattern discoveries
-4. `diff` to see knowledge evolution including new pattern understanding
-5. `commit` to save learning state with enhanced pattern knowledge
+### **Session-Driven Learning Workflow**:
+1. **Start Session**: `session start "problem description"`
+2. **Search Existing**: `search "relevant domain keywords"`
+3. **Find Patterns**: `find "specific implementation patterns"`
+4. **Get Examples**: `examples "learned concepts"`
+5. **Implement & Document**: Use structured session template
+6. **Integrate**: `integrate` - AI processes learnings into memory
+7. **Commit**: `commit "description"` - Save learning state
 
-### **Application Codebase Analysis Workflow** (NEW):
-1. **Initial Discovery**: `code-search "system architecture application"`
-2. **Pattern Analysis**: `code-search "mvc controller repository"`
-3. **Integration Understanding**: `code-search "api middleware configuration"`
-4. **Security Assessment**: `code-search "security practice validation"`
-5. **Performance Review**: `code-search "performance optimization caching"`
-6. **Learning Integration**: `reflect` on discoveries and update memory tree
-
-### **For Information Retrieval** (Enhanced):
-1. `code-search <domain_keywords>` - **FIRST**: Find both code examples AND knowledge
-2. `search <term>` - Secondary: Full-text search across learning data
-3. `query <question>` - Get structured answers about stored knowledge
-4. `principles` - Review learned principles for consistency
-5. `timeline` - Understand learning progression over time
-
-### **For Deep Analysis** (Enhanced):
-1. `code-search <pattern_keywords>` - **START**: Find relevant patterns and knowledge
-2. `analyze <topic>` - Investigate specific areas in depth
-3. `insights --domain <area>` - Explore technical domain knowledge
-4. `compare <sessions>` - Track knowledge evolution patterns
-5. `contradictions` - Identify and resolve belief conflicts
+### **Knowledge Discovery Workflow**:
+1. **Unified Search**: `search <keywords>` - Find across all sources with confidence scoring
+2. **Review Principles**: `principles [filter]` - Check validated knowledge
+3. **Cross-Reference**: Use path:line references to navigate to specific implementations
+4. **Analyze Patterns**: Compare code examples with learned principles
+5. **Export Knowledge**: Share insights through knowledge base exports
 
 ## 🧠 Enhanced Memory Architecture
 
